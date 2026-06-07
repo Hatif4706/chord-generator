@@ -36,12 +36,12 @@ if os.path.exists(dll_path):
     import ctypes
     ctypes.cdll.LoadLibrary(dll_path)
 
-# ==========================================
+
 # HELPER: DETEKSI FLUIDSYNTH & SOUNDFONT
-# ==========================================
+
 def find_fluidsynth() -> Optional[str]:
     """Cari executable fluidsynth di PATH atau lokasi umum."""
-    # Cek di PATH dulu (berlaku di semua OS termasuk venv di Linux/Mac/WSL)
+    # Cek PATH fluidsynth
     found = shutil.which("fluidsynth")
     if found:
         return found
@@ -92,12 +92,12 @@ def find_soundfont() -> Optional[str]:
         if os.path.exists(path):
             return path
 
-    # Fallback: cari .sf2 di direktori umum lainnya (berlaku semua OS)
+
     extra = [
         os.path.expanduser("~/soundfonts/FluidR3_GM.sf2"),
         os.path.expanduser("~/.local/share/sounds/sf2/FluidR3_GM.sf2"),
         "/soundfonts/FluidR3_GM.sf2",
-        # Tambahkan ini di dalam find_soundfont(), di list extra:
+
 os.path.join(os.path.dirname(__file__), "soundfonts", "GeneralUser_GS.sf2"),
 os.path.join(os.path.dirname(__file__), "soundfonts", "FluidR3_GM.sf2"),
     ]
@@ -107,9 +107,7 @@ os.path.join(os.path.dirname(__file__), "soundfonts", "FluidR3_GM.sf2"),
 
     return None
 
-# ==========================================
-# APP INIT
-# ==========================================
+
 app = FastAPI(
     title="Chord Music Generator API",
     description="API untuk menghasilkan progres chord dan file audio MP3",
@@ -127,9 +125,8 @@ app.add_middleware(
 OUTPUT_FOLDER = "kumpulan_lagu"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# ==========================================
+
 # STRUKTUR DATA: NODE TREE
-# ==========================================
 class TreeNode:
     def __init__(self, name):
         self.name = name
@@ -138,9 +135,9 @@ class TreeNode:
     def add_child(self, name, node):
         self.children[name] = node
 
-# ==========================================
+
 # KAMUS CHORD & NOTASI MIDI
-# ==========================================
+
 NOTE_MIDI = {
     'C2': 36, 'D2': 38, 'E2': 40, 'F2': 41, 'G2': 43, 'A2': 45, 'B2': 47,
     'C3': 48, 'D3': 50, 'E3': 52, 'F3': 53, 'F#3': 54, 'G3': 55,
@@ -174,9 +171,7 @@ INSTRUMENT_PROGRAMS = {
     "Synth Pad": 89,
 }
 
-# ==========================================
 # BANGUN TREE
-# ==========================================
 root = TreeNode("Sistem Generator Chord")
 
 pop_node     = TreeNode("Pop")
@@ -206,9 +201,7 @@ GENRE_FAMILY_MAP = {
     "Classic": ["G-Major Family"],
 }
 
-# ==========================================
 # PYDANTIC MODELS
-# ==========================================
 class GenerateRequest(BaseModel):
     genre:       str = "Pop"
     family:      str = "C-Major Family"
@@ -228,9 +221,7 @@ class GenerateResponse(BaseModel):
     filename: str
     total_chords: int
 
-# ==========================================
 # ENGINE CORE
-# ==========================================
 def generate_chord_sequence(genre: str, family: str, pola_pilihan: str):
     master_pola = {
         "Pola 1": ["Verse 1", "Reff 1", "Verse 2", "Reff 2"],
@@ -359,9 +350,7 @@ def render_audio(queue_data, instruments: list, bpm: int) -> Optional[str]:
     finally:
         if os.path.exists(temp_midi):
             os.remove(temp_midi)
-# ==========================================
 # ROUTES
-# ==========================================
 @app.get("/")
 def root_info():
     return {
