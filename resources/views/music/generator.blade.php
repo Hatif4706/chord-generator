@@ -45,7 +45,7 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #2e3450; border-radius: 8px; }
 
-        /* BPM slider thumb */
+       
         input[type=range].bpm-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 18px; height: 18px;
@@ -60,7 +60,7 @@
             box-shadow: 0 0 20px rgba(0,245,168,.7);
         }
 
-        /* Seekbar thumb — lebih kecil dan halus */
+        
         input[type=range].seek-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 14px; height: 14px;
@@ -94,7 +94,7 @@
         .inst-label:hover { @apply border-borderHi; }
         .inst-label:has(input:checked) { @apply border-accent/30 bg-accent/5; }
 
-        /* History item */
+        
         .hist-item { @apply flex items-center gap-3 px-3 py-2.5 rounded-xl border border-border/50 cursor-pointer transition-all duration-150 hover:border-accent/30 hover:bg-accent/5; }
         .hist-item.active { @apply border-accent/40 bg-accent/8; }
 
@@ -115,7 +115,7 @@
             animation: shine 2.5s infinite;
         }
 
-        /* Play button in history */
+        
         .hist-play-btn {
             @apply w-7 h-7 rounded-full shrink-0 flex items-center justify-center transition-all duration-150;
             background: rgba(0,245,168,.1);
@@ -169,10 +169,10 @@
         <div class="mt-8 h-px" style="background:linear-gradient(90deg,transparent,#2e3450 30%,#2e3450 70%,transparent);"></div>
     </header>
 
-    <!-- MAIN GRID: History | Config | Output -->
+  
     <div class="grid grid-cols-1 lg:grid-cols-[260px_360px_1fr] gap-5 items-start">
 
-        <!-- ══ KOLOM 1: HISTORY ══ -->
+       
         <div class="lg:sticky lg:top-6">
             <div class="rounded-2xl p-5 relative overflow-hidden"
                  style="background:#0e1018;border:1px solid #1f2333;box-shadow:0 8px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);">
@@ -185,7 +185,7 @@
                     </button>
                 </div>
 
-                <!-- History list -->
+                
                 <div class="flex flex-col gap-1.5 max-h-[460px] overflow-y-auto custom-scrollbar pr-0.5" id="historyList">
                     <div class="flex flex-col items-center py-8 text-center gap-2" id="historyEmpty">
                         <div class="text-3xl opacity-20">📋</div>
@@ -194,7 +194,7 @@
                     <div class="flex flex-col gap-1.5" id="historyItems"></div>
                 </div>
 
-                <!-- Server-side pre-loaded history (for PHP data) -->
+                
 <script id="serverHistory" type="application/json">
 <?php
 echo json_encode($histories->map(function ($h) {
@@ -216,7 +216,7 @@ echo json_encode($histories->map(function ($h) {
             </div>
         </div>
 
-        <!-- ══ KOLOM 2: KONFIGURASI ══ -->
+       
         <div class="lg:sticky lg:top-6">
             <div class="rounded-2xl p-6 relative overflow-hidden"
                  style="background:#0e1018;border:1px solid #1f2333;box-shadow:0 8px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04);">
@@ -299,10 +299,10 @@ echo json_encode($histories->map(function ($h) {
             </div>
         </div>
 
-        <!-- ══ KOLOM 3: OUTPUT ══ -->
+  
         <div class="flex flex-col gap-5">
 
-            <!-- Empty state -->
+            
             <div class="rounded-2xl p-8 flex flex-col items-center justify-center min-h-[300px] text-center"
                  id="emptyState"
                  style="background:#0e1018;border:1px solid #1f2333;border-style:dashed;">
@@ -312,7 +312,7 @@ echo json_encode($histories->map(function ($h) {
                 </p>
             </div>
 
-            <!-- Loading state -->
+          
             <div class="rounded-2xl p-8 flex flex-col items-center justify-center min-h-[300px]"
                  id="loadingState" style="display:none;background:#0e1018;border:1px solid #1f2333;">
                 <div class="relative w-16 h-16 mb-6">
@@ -325,7 +325,7 @@ echo json_encode($histories->map(function ($h) {
                 <p class="text-sub text-sm font-mono animate-pulse" id="loadingMsg">Menyusun progres chord…</p>
             </div>
 
-            <!-- ══ PLAYER CARD ══ -->
+           
             <div id="playerCard" style="display:none;">
                 <div class="rounded-2xl p-6 relative overflow-hidden animate-in"
                      style="background:linear-gradient(135deg,#0e1018 0%,#12151f 100%);border:1px solid #1f2333;box-shadow:0 8px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.04);">
@@ -334,16 +334,16 @@ echo json_encode($histories->map(function ($h) {
 
                     <div class="section-label mb-5">Now Playing</div>
 
-                    <!-- Track info & controls row -->
+                    
                     <div class="flex items-center gap-4 mb-5">
-                        <!-- Play/Pause button -->
+                       
                         <button id="playBtn" onclick="togglePlay()"
                             class="relative w-14 h-14 rounded-full shrink-0 flex items-center justify-center transition-all duration-200 hover:scale-105"
                             style="background:linear-gradient(135deg,#00f5a8,#00c987);box-shadow:0 4px 20px rgba(0,245,168,.35);">
                             <svg id="playIcon" width="18" height="18" viewBox="0 0 24 24" class="fill-black ml-0.5"><path d="M8 5v14l11-7z"/></svg>
                         </button>
 
-                        <!-- Track name & meta -->
+                        
                         <div class="flex-1 min-w-0">
                             <div class="font-mono text-[10px] text-muted truncate uppercase tracking-widest" id="playerFilename">—</div>
                             <div class="text-[14px] text-text font-semibold mt-1 truncate" id="playerMeta">—</div>
@@ -360,15 +360,15 @@ echo json_encode($histories->map(function ($h) {
                         </button> -->
                     </div>
 
-                    <!-- ══ SEEKBAR / PROGRESS BAR ══ -->
+                
                     <div class="mb-4">
-                        <!-- Time labels -->
+                       
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-mono text-[10px] text-accent" id="timeCurrentLabel">0:00</span>
                             <span class="font-mono text-[10px] text-muted" id="timeTotalLabel">0:00</span>
                         </div>
 
-                        <!-- Seek slider track container -->
+                        
                         <div class="relative w-full group">
                             <input type="range"
                                    id="seekBar"
@@ -382,17 +382,17 @@ echo json_encode($histories->map(function ($h) {
                                    onchange="onSeekRelease(this)">
                         </div>
 
-                        <!-- Buffered indicator (visual only) -->
+                     
                         <div class="flex justify-between mt-1.5">
                             <span class="font-mono text-[10px] text-muted">0:00</span>
                             <span class="font-mono text-[10px] text-muted" id="seekSpeedLabel" style="display:none;"></span>
                         </div>
                     </div>
 
-                    <!-- Waveform bars -->
+               
                     <div class="w-full h-10 flex items-center gap-[2px]" id="waveformBars"></div>
 
-                    <!-- Hidden audio element -->
+                
                     <audio id="audioPlayer"
                            onended="onAudioEnd()"
                            ontimeupdate="onAudioTimeUpdate()"
@@ -402,7 +402,7 @@ echo json_encode($histories->map(function ($h) {
                 </div>
             </div>
 
-            <!-- Stats bar -->
+            
             <div class="grid grid-cols-3 gap-4 animate-in" id="statsBar" style="display:none">
                 <div class="rounded-xl p-4 text-center relative overflow-hidden"
                      style="background:#0e1018;border:1px solid #1f2333;">
@@ -427,7 +427,7 @@ echo json_encode($histories->map(function ($h) {
                 </div>
             </div>
 
-            <!-- Sequence card -->
+           
             <div id="sequenceCard" style="display:none;">
                 <div class="rounded-2xl p-6 animate-in"
                      style="background:#0e1018;border:1px solid #1f2333;box-shadow:0 8px 60px rgba(0,0,0,.5);">
@@ -461,7 +461,7 @@ echo json_encode($histories->map(function ($h) {
     </div>
 </div>
 
-<!-- Toast error -->
+
 <div id="toast"
      class="fixed bottom-6 right-6 z-[999] flex items-center gap-3 px-5 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 translate-y-6 opacity-0 pointer-events-none"
      style="background:#12151f;border:1px solid rgba(255,61,94,.3);color:#ff3d5e;box-shadow:0 8px 40px rgba(0,0,0,.6);">
@@ -470,7 +470,7 @@ echo json_encode($histories->map(function ($h) {
     </svg>
     <span id="toastMsg">Error</span>
 </div>
-<!-- Toast success -->
+
 <div id="toastSuccess"
      class="fixed bottom-6 right-6 z-[999] flex items-center gap-3 px-5 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 translate-y-6 opacity-0 pointer-events-none"
      style="background:#12151f;border:1px solid rgba(0,245,168,.3);color:#00f5a8;box-shadow:0 8px 40px rgba(0,0,0,.6);">
@@ -481,23 +481,23 @@ echo json_encode($histories->map(function ($h) {
 </div>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
+
 const OPTIONS       = @json($options);
 const CSRF          = document.querySelector('meta[name="csrf-token"]').content;
 const HISTORY_URL   = '{{ route("music.history.list") }}';
 const DELETE_URL    = '{{ url("music/history") }}';
 const AUDIO_BASE    = '{{ url("music/audio") }}';
 
-let audioUrl         = null;   // current audio URL
-let downloadFilename = null;   // current filename for download
+let audioUrl         = null;   
+let downloadFilename = null;   
 let isPlaying        = false;
-let seekDragging     = false;  // true while user drags seekbar
+let seekDragging     = false;  
 let allSequence      = [];
 let barAnimInterval  = null;
 let historyData      = [];
 let activeHistId     = null;
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+
 document.addEventListener('DOMContentLoaded', () => {
     updateFamilies();
     buildWaveform();
@@ -505,11 +505,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(checkApiStatus, 15000);
     initSliderTrack();
 
-    // Init filter btn active state
+
     const firstFilter = document.querySelector('.filter-btn');
     if (firstFilter) firstFilter.classList.add('active');
 
-    // Load server-side pre-rendered history
+
     try {
         const raw = JSON.parse(document.getElementById('serverHistory').textContent);
         historyData = raw;
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch(e) { console.warn('History parse error', e); }
 });
 
-// ─── BPM SLIDER TRACK ────────────────────────────────────────────────────────
+
 function initSliderTrack() {
     const r = document.getElementById('bpmRange');
     updateSliderTrack(r);
@@ -527,7 +527,6 @@ function updateSliderTrack(r) {
     r.style.background = `linear-gradient(90deg, #00f5a8 ${pct}%, #1f2333 ${pct}%)`;
 }
 
-// ─── FAMILY SELECT ─────────────────────────────────────────────────────────────
 function updateFamilies() {
     const genre = document.getElementById('genreSelect').value;
     const sel   = document.getElementById('familySelect');
@@ -535,7 +534,7 @@ function updateFamilies() {
     sel.innerHTML = fams.map(f => `<option value="${f}">${f}</option>`).join('');
 }
 
-// ─── WAVEFORM ──────────────────────────────────────────────────────────────────
+
 function buildWaveform() {
     const c = document.getElementById('waveformBars');
     c.innerHTML = '';
@@ -548,7 +547,6 @@ function buildWaveform() {
     }
 }
 
-// ─── API STATUS ────────────────────────────────────────────────────────────────
 async function checkApiStatus() {
     const badge = document.getElementById('apiBadge');
     const dot   = badge.querySelector('.api-dot');
@@ -564,7 +562,6 @@ async function checkApiStatus() {
     } catch { dot.style.background = '#ff3d5e'; span.textContent = 'API Offline'; }
 }
 
-// ─── GENERATE ─────────────────────────────────────────────────────────────────
 async function generateMusic() {
     const instruments = [...document.querySelectorAll('input[name="instruments[]"]:checked')].map(i => i.value);
     if (instruments.length === 0) { showToast('Pilih minimal satu instrumen!'); return; }
@@ -629,25 +626,21 @@ function showResult(data, payload) {
     document.getElementById('playerMeta').textContent     = `${payload.genre} · ${payload.family} · ${payload.pola}`;
     document.getElementById('playerCard').style.display   = 'block';
 
-    // Stats
+
     document.getElementById('statChords').textContent = data.total_chords;
     document.getElementById('statBPM').textContent    = payload.bpm;
     document.getElementById('statInst').textContent   = payload.instruments.length;
     document.getElementById('statsBar').style.display = 'grid';
 
-    // Sequence
+
     renderTable(data.sequence);
     document.getElementById('sequenceCard').style.display = 'block';
 }
 
-// ─── AUDIO CORE ───────────────────────────────────────────────────────────────
-/**
- * Load a new audio source. Stops current playback first.
- */
 function loadAudioSrc(url, filename) {
     const audio = document.getElementById('audioPlayer');
 
-    // Stop & reset previous playback
+
     if (isPlaying) {
         audio.pause();
         isPlaying = false;
@@ -657,13 +650,13 @@ function loadAudioSrc(url, filename) {
     audioUrl         = url;
     downloadFilename = filename;
 
-    // Reset seekbar & time display
+
     resetSeekUI();
 
-    // Set icon to play
+
     document.getElementById('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
 
-    // Load the new source
+
     audio.src = url;
     audio.load();
 }
@@ -688,7 +681,7 @@ function togglePlay() {
         playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
         document.querySelectorAll('#waveformBars .bar').forEach(b => b.classList.remove('active'));
         clearInterval(barAnimInterval);
-        // Update history play button state
+   
         syncHistPlayBtn(activeHistId, false);
     } else {
         audio.play().catch(err => {
@@ -716,14 +709,14 @@ function onAudioEnd() {
     clearInterval(barAnimInterval);
     syncHistPlayBtn(activeHistId, false);
 
-    // Reset seek to beginning
+    
     const seekBar = document.getElementById('seekBar');
     seekBar.value = 0;
     seekBar.style.background = 'linear-gradient(90deg, #00f5a8 0%, #1f2333 0%)';
     document.getElementById('timeCurrentLabel').textContent = '0:00';
 }
 
-// ─── SEEKBAR EVENTS ───────────────────────────────────────────────────────────
+
 function onAudioMetaLoaded() {
     const audio = document.getElementById('audioPlayer');
     const dur   = audio.duration;
@@ -733,12 +726,12 @@ function onAudioMetaLoaded() {
 }
 
 function onAudioCanPlay() {
-    // Duration might now be available
+  
     onAudioMetaLoaded();
 }
 
 function onAudioTimeUpdate() {
-    if (seekDragging) return; // Don't update while user is dragging
+    if (seekDragging) return; 
 
     const audio   = document.getElementById('audioPlayer');
     const seekBar = document.getElementById('seekBar');
@@ -754,12 +747,10 @@ function onAudioTimeUpdate() {
     }
 }
 
-/**
- * Called while dragging — only update visual fill, not actual seek
- */
+
 function onSeekInput(input) {
     updateSeekBarFill(parseFloat(input.value));
-    // Show preview time
+
     const audio = document.getElementById('audioPlayer');
     const dur   = audio.duration;
     if (!isNaN(dur) && dur > 0) {
@@ -768,9 +759,6 @@ function onSeekInput(input) {
     }
 }
 
-/**
- * Called on mouseup / touchend — perform the actual seek
- */
 function onSeekRelease(input) {
     seekDragging = false;
     const audio = document.getElementById('audioPlayer');
@@ -792,7 +780,6 @@ function formatTime(secs) {
     return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-// ─── DOWNLOAD ─────────────────────────────────────────────────────────────────
 async function downloadAudio() {
     if (!audioUrl || !downloadFilename) return;
     const btn  = document.getElementById('downloadBtn');
@@ -802,7 +789,7 @@ async function downloadAudio() {
     text.textContent = 'MENGUNDUH…';
 
     try {
-        // Tambahkan ?dl=1 agar server kirim Content-Disposition: attachment
+
         const dlUrl = audioUrl + (audioUrl.includes('?') ? '&' : '?') + 'dl=1';
         const resp  = await fetch(dlUrl);
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
@@ -824,7 +811,6 @@ async function downloadAudio() {
     }
 }
 
-// ─── TABLE ─────────────────────────────────────────────────────────────────────
 function renderTable(seq) {
     allSequence = seq;
     filterTable('all', document.querySelector('.filter-btn'));
@@ -852,7 +838,6 @@ function filterTable(type, btn) {
     }).join('');
 }
 
-// ─── HISTORY ──────────────────────────────────────────────────────────────────
 async function loadHistory() {
     try {
         const res  = await fetch(HISTORY_URL);
@@ -879,7 +864,7 @@ function renderHistoryList() {
         div.className = 'hist-item group' + (isActive ? ' active' : '');
         div.dataset.id = h.id;
 
-        // Determine if this history item's audio is currently playing
+  
         const isThisPlaying = (h.id === activeHistId && isPlaying);
 
         div.innerHTML = `
@@ -907,18 +892,12 @@ function renderHistoryList() {
                 </button>
             </div>`;
 
-        // Click on item → load into player
+
         div.addEventListener('click', () => loadHistoryResult(h));
         items.appendChild(div);
     });
 }
 
-/**
- * Toggle play/pause for a history item's audio.
- * If this item is already loaded and playing → pause.
- * If this item is already loaded but paused → play.
- * If this item is a different track → load it first, then play.
- */
 function historyTogglePlay(histId) {
     const h = historyData.find(x => x.id === histId);
     if (!h || !h.filename) return;
@@ -926,45 +905,38 @@ function historyTogglePlay(histId) {
     const targetUrl = `${AUDIO_BASE}/${h.filename}`;
 
     if (activeHistId === histId) {
-        // Same track — just toggle
+    
         togglePlay();
     } else {
-        // Different track — load and auto-play
-        loadHistoryResult(h, true); // true = auto-play
+      
+        loadHistoryResult(h, true); 
     }
 }
 
-/**
- * Load a history item's data into the player.
- * @param {Object} h        - History object
- * @param {boolean} autoPlay - If true, start playing immediately after load
- */
+
 function loadHistoryResult(h, autoPlay = false) {
     activeHistId = h.id;
 
-    // Highlight active history item
+  
     document.querySelectorAll('.hist-item').forEach(el => {
         el.classList.toggle('active', parseInt(el.dataset.id) === h.id);
     });
 
-    // Load sequence table
     renderTable(h.sequence || []);
     document.getElementById('sequenceCard').style.display = 'block';
 
-    // Stats
     document.getElementById('statChords').textContent = h.total_chords || h.sequence?.length || '—';
     document.getElementById('statBPM').textContent    = h.bpm;
     document.getElementById('statInst').textContent   = (h.instruments || []).length;
     document.getElementById('statsBar').style.display = 'grid';
 
-    // Hide empty/loading states
     document.getElementById('emptyState').style.display   = 'none';
     document.getElementById('loadingState').style.display = 'none';
 
     if (h.filename) {
         const url = `${AUDIO_BASE}/${h.filename}`;
 
-        // Load audio src (resets seekbar & stops current playback)
+       
         loadAudioSrc(url, h.filename);
 
         document.getElementById('playerFilename').textContent = h.filename;
@@ -973,7 +945,7 @@ function loadHistoryResult(h, autoPlay = false) {
         buildWaveform();
 
         if (autoPlay) {
-            // Wait for canplay before starting
+            
             const audio = document.getElementById('audioPlayer');
             const onReady = () => {
                 audio.removeEventListener('canplay', onReady);
@@ -990,13 +962,11 @@ function loadHistoryResult(h, autoPlay = false) {
         document.getElementById('playerCard').style.display = 'none';
     }
 
-    // Refresh history list icons
+
     renderHistoryList();
 }
 
-/**
- * Sync play button icon in the history list.
- */
+
 function syncHistPlayBtn(histId, playing) {
     const btn = document.getElementById(`histPlayBtn-${histId}`);
     if (!btn) return;
@@ -1016,7 +986,7 @@ async function deleteHistoryItem(id) {
         });
         if (res.ok) {
             if (activeHistId === id) {
-                // Stop audio if this was playing
+              
                 const audio = document.getElementById('audioPlayer');
                 audio.pause();
                 isPlaying = false;
@@ -1031,7 +1001,6 @@ async function deleteHistoryItem(id) {
     } catch { showToast('Gagal menghapus riwayat.'); }
 }
 
-// ─── TOAST ─────────────────────────────────────────────────────────────────────
 function showToast(msg) {
     const t = document.getElementById('toast');
     document.getElementById('toastMsg').textContent = msg;

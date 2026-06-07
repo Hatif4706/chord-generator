@@ -32,57 +32,49 @@ body{font-family:'Inter',sans-serif;background:#04040a;color:#e2e8f0;min-height:
 .chord-item:nth-child(n+5){animation-delay:.15s}
 .spin{animation:spin .7s linear infinite}
 
-/* Piano keys */
+
 .piano-key{display:inline-flex;align-items:center;justify-content:center;border-radius:3px;font-size:9px;font-family:'JetBrains Mono',monospace;padding:2px 4px}
 .piano-key.white{background:#dde;color:#111;border:1px solid #bbc}
 .piano-key.black{background:#1a1a2e;color:#8888aa;border:1px solid #333355}
 
-/* Form inputs */
 input[type=range]{-webkit-appearance:none;background:#181825;border-radius:3px;height:3px;width:100%}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:#f59e0b;border-radius:50%;cursor:pointer}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23ffffff35' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
 
-/* ═══════════════════════════════════════════
-   SIDEBAR LAYOUT FIX
-   Form sticky di atas, history mengalir di bawahnya.
-   overflow-y:auto pada form agar tidak pernah
-   meluap layar dan menutupi tombol generate.
-   ═══════════════════════════════════════════ */
 .col-sidebar{
     display:flex;
     flex-direction:column;
     gap:1rem;
 }
 
-/* Form tidak perlu scroll sendiri */
+
 .form-sticky{
     position:sticky;
     top:72px;
     z-index:10;
 }
 
-/* BIARKAN FORM MEMANJANG */
 .form-inner{
     overflow:visible;
     max-height:none;
 }
 
-/* History normal */
+
 .history-panel{
     position:static;
 }
 
-/* Player */
+
 .player{background:rgba(8,8,18,.98);backdrop-filter:blur(22px);border-top:1px solid rgba(245,158,11,.18)}
 .prog-track{height:4px;background:#1a1a2e;border-radius:2px;cursor:pointer;position:relative}
 .prog-fill{height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:2px;transition:width .07s linear;pointer-events:none}
 .active-card{border-color:rgba(245,158,11,.65)!important;box-shadow:0 0 12px rgba(245,158,11,.2)!important;background:rgba(245,158,11,.05)!important}
 
-/* History items */
+
 .hist-item:hover{background:rgba(255,255,255,.03)}
 .hist-item.active{background:rgba(245,158,11,.055);border-left:2px solid #f59e0b}
 
-/* Loading overlay */
+
 #audio-loading{display:none;position:fixed;inset:0;background:rgba(4,4,10,.7);z-index:200;align-items:center;justify-content:center;flex-direction:column;gap:12px;backdrop-filter:blur(4px)}
 #audio-loading.show{display:flex}
 
@@ -175,17 +167,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     AUDIO ENGINE v5 — Tone.Sampler dengan audio nyata
-     Perbaikan utama vs versi sebelumnya:
-     1. Sampler Piano, Guitar, Bass → audio nyata (Salamander/Tone.js CDN)
-     2. Strings & Pad → synthesis dengan polyphony sangat rendah (max 3)
-        sehingga tidak overload CPU saat semua instrumen aktif
-     3. Loading indicator: user tahu kapan sampel belum siap
-     4. triggerAttackRelease dipanggil dengan array (bukan loop)
-        untuk menghindari timing drift antar note dalam satu chord
-     5. Semua instrumen dijadwalkan dari satu Transport.start() tunggal
-═══════════════════════════════════════════════════════════════════ -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.9.11/Tone.js"></script>
 <script>
 const NOTE_MIDI={
@@ -214,13 +196,13 @@ const PS={
   'C6':'C6','D#6':'Ds6','F#6':'Fs6','A6':'A6',
   'C7':'C7','D#7':'Ds7','F#7':'Fs7','A7':'A7','C8':'C8'
 };
-// Guitar Nylon (rekaman nyata)
+// Guitar Nylon 
 const GS={
   'E2':'E2','F#2':'Fs2','A2':'A2','C3':'C3',
   'E3':'E3','F#3':'Fs3','A3':'A3','C4':'C4',
   'E4':'E4','F#4':'Fs4','A4':'A4','C5':'C5','E5':'E5'
 };
-// Bass Electric (rekaman nyata)
+// Bass Electric 
 const BS={
   'B1':'B1','E1':'E1','A1':'A1',
   'D2':'D2','G2':'G2','C2':'C2','F2':'F2','E2':'E2'
@@ -280,7 +262,7 @@ function mkBass(){
   });
 }
 
-// Bangun strings — synthesis (maxPolyphony 3 per layer agar hemat CPU)
+// Bangun strings — synthesis 
 function mkStrings(){
   const rev=new Tone.Reverb({decay:2.8,preDelay:0.035,wet:0.40}).connect(masterVol);
   const vib=new Tone.Vibrato({frequency:4.5,depth:0.035,wet:0.5}).connect(rev);
@@ -367,9 +349,7 @@ async function togglePlay(){
   PS_.playing?pause_():await play_();
 }
 
-// ── Scheduler ─────────────────────────────────────────────────────────
-// Semua event dijadwalkan sekaligus sebelum Transport.start()
-// sehingga tidak ada jeda saat playback berlangsung.
+
 async function play_(){
   if(!PS_.queue.length)return;
   showLoading('Menyiapkan audio…');
@@ -402,13 +382,13 @@ async function play_(){
     const gNotes =raw.map(gNote).filter(Boolean);        // Guitar (oktaf -1)
     const bRoot  =bNote(raw[0]);                         // Bass (root only, C2 range)
 
-    // ── for beat in range(4) ── identik Python ──
+    // ── for beat in range(4) 
     for(let b=0;b<4;b++){
       const bt=t0+b*spb;
 
       if(insts.includes('Piano')&&Piano){
         Tone.Transport.schedule(time=>{
-          // Sampler: triggerAttackRelease per note (Sampler tidak terima array)
+    
           pNotes.forEach(n=>Piano.triggerAttackRelease(n,dur,time));
         },bt);
       }
@@ -424,7 +404,7 @@ async function play_(){
       }
       if(insts.includes('Strings')&&Strings){
         Tone.Transport.schedule(time=>{
-          // PolySynth menerima array — tidak ada loop
+  
           Strings.a.triggerAttackRelease(pNotes,dur,time);
           Strings.b.triggerAttackRelease(pNotes,dur,time);
         },bt);
